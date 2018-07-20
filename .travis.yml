@@ -1,0 +1,18 @@
+env:
+  matrix:
+    - DOCKER_VERSION='18.03.1' DOCKER_COMPOSE_VERSION='1.17.1'
+
+
+before_script:
+  - sudo apt-get purge docker-ce      
+  - sudo rm /usr/local/bin/docker-compose
+  - wget -O docker.deb https://apt.dockerproject.org/repo/pool/main/d/docker-engine/docker-engine_${DOCKER_VERSION}~ce-0~ubuntu-trusty_amd64.deb 
+  - sudo dpkg -i --force-confnew docker.deb    
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+script:
+  - echo $TRAVIS_COMMIT
+  - ./scripts/ci.sh
+
