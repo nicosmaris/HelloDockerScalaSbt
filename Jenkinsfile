@@ -12,7 +12,7 @@ pipeline {
     post {
       always {
           ansiColor('xterm') {
-            sh "docker-compose stop || true"
+            sh "/var/jenkins_home/docker-compose stop || true"
           }
       }
     }
