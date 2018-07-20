@@ -3,9 +3,6 @@ services:
   jobmanager:
     image: flink:1.5.0-scala_2.11
     container_name: jobs
-    volumes_from:
-      - job
-    tty:           true
     expose:
       - "6123"
     ports:
@@ -13,11 +10,12 @@ services:
     command: jobmanager
     environment:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    labels:
+      com.pccwg.flink-node-type-jobs: "true"
 
   taskmanager:
     image: flink:1.5.0-scala_2.11
     container_name: tasks
-    tty:           true
     expose:
       - "6121"
       - "6122"
@@ -28,18 +26,23 @@ services:
       - "jobmanager:jobmanager"
     environment:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    labels:
+      com.pccwg.flink-node-type-tasks: "true"
+
+  box:
+    build:
+      context:     .
+    command:       tail -F /workspace/out/foo/assembly/log
+    volumes:
+        - /workspace/out
 
   job:
     build:
       context:     .
-      args:
-        username:  $USER
-        userid:    $UID
-    command:       bash -c "mill -i foo.assembly && cp out/foo/assembly/dest/out.jar /jobs"
+    container_name: thejob
+    command:       bash -c "cp -R /input/* /workspace/ && cd /workspace && mill -i foo.assembly"
+    volumes_from:
+      - box
     volumes:
-        - /jobs
-    tty:           true
-    stdin_open:    true
-    volumes:
-      - .:/root
+      - .:/input:ro
 

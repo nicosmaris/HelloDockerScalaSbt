@@ -25,7 +25,9 @@ RUN \
   mill -i resolve _ && \
   rm build.sc
 
-RUN mkdir -p /jobs
+RUN mkdir -p /workspace/out
+RUN mkdir -p /input
+WORKDIR /workspace
 
 # Application folder
 #ENV APP_HOME /app
