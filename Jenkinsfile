@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Build job') {
+        stage('Build job...') {
             steps {
               ansiColor('xterm') {
                 sh './scripts/ci.sh'
