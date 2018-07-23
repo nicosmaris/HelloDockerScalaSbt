@@ -15,5 +15,4 @@ before_script:
 script:
   - echo $TRAVIS_COMMIT
   - ./scripts/ci.sh
-  - docker-compose run job bash -c "cp -R /input/* /workspace/ && cd /workspace && mill -i foo.test"
 
