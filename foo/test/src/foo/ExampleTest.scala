@@ -1,22 +1,20 @@
 package foo
 
 import utest._
+import org.apache.flink.streaming.api.functions.sink.SinkFunction
+import org.apache.flink.api.common.functions.MapFunction
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
+import scala.collection.mutable.ListBuffer
+import org.apache.flink.test.util.AbstractTestBase
 
-object ExampleTests extends TestSuite {
+object ExampleTests extends AbstractTestBase {
   val tests = Tests{
     'test1 - {
-      assert(1+1 == 2) 
-    }
-  }
-}
-  /*
-    @Test
-    def testMultiply(): Unit = {
         val env = StreamExecutionEnvironment.getExecutionEnvironment
         // configure your test environment
         env.setParallelism(1)
         // values are collected in a static variable
-        CollectSink.values.clear()
+        Companion.values.clear()
         // create a stream of custom elements and apply transformations
         env
             .fromElements(1L, 21L, 22L)
@@ -25,21 +23,28 @@ object ExampleTests extends TestSuite {
         // execute
         env.execute()
         // verify your results
-        assertEquals(Lists.newArrayList(2L, 42L, 44L), CollectSink.values)
+        assert(ListBuffer(2L, 42L, 44L) == Companion.values)
     }
-}    
+  }
+}
+/* UUT */
+class MultiplyByTwo extends MapFunction[Long, Long] {
+
+    override def map(value: Long): Long = {
+        value * 2
+    }
+}
 
 // create a testing sink
 class CollectSink extends SinkFunction[Long] {
-    override def invoke(value: java.lang.Long): Unit = {
+    override def invoke(value: Long): Unit = {
         synchronized {
-            values.add(value)
+            Companion.values.append(value)
         }
     }
 }
 
-object CollectSink {
+object Companion {
     // must be static
-    val values: List[Long] = new ArrayList()
+    val values: ListBuffer[Long] = new ListBuffer[Long]()
 }
-*/
