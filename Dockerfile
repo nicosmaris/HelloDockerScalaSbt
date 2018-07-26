@@ -1,7 +1,8 @@
 FROM openjdk:8u171
 
-# Env variables
-ENV SCALA_VERSION 2.12.6
+# https://issues.apache.org/jira/browse/FLINK-6332
+# avoid scala 2.12 until flink 1.6 https://issues.apache.org/jira/browse/FLINK-5005
+ENV SCALA_VERSION 2.11.1
 ENV MILL_VERSION 0.2.5
 
 # Define working directory
