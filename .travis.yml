@@ -1,18 +1,9 @@
-env:
-  matrix:
-    - DOCKER_VERSION='18.03.1' DOCKER_COMPOSE_VERSION='1.17.1'
+language: java
 
-
-before_script:
-  - sudo apt-get purge docker-ce      
-  - sudo rm /usr/local/bin/docker-compose
-  - wget -O docker.deb https://download.docker.com/linux/ubuntu/dists/trusty/pool/stable/amd64/docker-ce_${DOCKER_VERSION}~ce-0~ubuntu_amd64.deb 
-  - sudo dpkg -i --force-confnew docker.deb    
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-
-script:
-  - echo $TRAVIS_COMMIT
-  - ./scripts/ci.sh
-
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
