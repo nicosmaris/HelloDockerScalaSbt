@@ -21,5 +21,5 @@ before_script:
   - cd -
 
 script:
-  - ./executables/mill -i foo.assembly
+  - $TRAVIS_BUILD_DIR/executables/mill -i foo.assembly
 
