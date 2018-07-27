@@ -1,18 +1,25 @@
+language: scala
+jdk: oraclejdk8
+sudo: false
+
+before_install:
+  - umask 0022
+
 env:
   matrix:
-    - DOCKER_VERSION='18.03.1' DOCKER_COMPOSE_VERSION='1.17.1'
+   - SCALA_VERSION='2.11.1' MILL_VERSION='0.2.5'
 
 
 before_script:
-  - sudo apt-get purge docker-ce      
-  - sudo rm /usr/local/bin/docker-compose
-  - wget -O docker.deb https://download.docker.com/linux/ubuntu/dists/trusty/pool/stable/amd64/docker-ce_${DOCKER_VERSION}~ce-0~ubuntu_amd64.deb 
-  - sudo dpkg -i --force-confnew docker.deb    
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+  - mkdir executables
+  - cd executables
+  - curl -L -o ./mill https://github.com/lihaoyi/mill/releases/download/$MILL_VERSION/$MILL_VERSION
+  - chmod +x ./mill
+  - touch build.sc
+  - ./mill -i resolve _
+  - rm build.sc
+  - cd -
 
 script:
-  - echo $TRAVIS_COMMIT
-  - ./scripts/ci.sh
+  - ./executables/mill -i foo.assembly
 
