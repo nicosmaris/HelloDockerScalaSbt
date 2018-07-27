@@ -16,7 +16,7 @@ before_script:
   - curl -L -o ./mill https://github.com/lihaoyi/mill/releases/download/$MILL_VERSION/$MILL_VERSION
   - chmod +x ./mill
   - touch build.sc
-  - ./mill -i resolve _
+  - $TRAVIS_BUILD_DIR/executables/mill -i resolve _
   - rm build.sc
   - cd -
 
