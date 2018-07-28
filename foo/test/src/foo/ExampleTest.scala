@@ -13,10 +13,10 @@ object Companion {
     val values: ListBuffer[Long] = new ListBuffer[Long]()
 }
 /* UUT */
-class MultiplyByTwo extends MapFunction[Long, Long] implements ResultTypeQueryable<Long> {
-    override getProducedType(): TypeInformation[Long] {
-	    (TypeInformation[Long]) BasicTypeInfo.INT_TYPE_INFO;
-	}
+class MultiplyByTwo extends MapFunction[Long, Long] with ResultTypeQueryable<Long> {
+    override def getProducedType(): TypeInformation[Long] {
+        (TypeInformation[Long]) BasicTypeInfo.INT_TYPE_INFO;
+    }
     override def map(value: Long): Long = {
         value * 2
     }
