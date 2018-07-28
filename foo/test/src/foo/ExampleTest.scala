@@ -5,6 +5,7 @@ import org.apache.flink.streaming.api.functions.sink.SinkFunction
 import org.apache.flink.api.common.functions.MapFunction
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import scala.collection.mutable.ListBuffer
+import org.apache.flink.api.common.typeinfo.TypeInformation
 //import org.apache.flink.test.util.AbstractTestBase
 
 object Companion {
@@ -12,8 +13,10 @@ object Companion {
     val values: ListBuffer[Long] = new ListBuffer[Long]()
 }
 /* UUT */
-class MultiplyByTwo extends MapFunction[Long, Long] {
-
+class MultiplyByTwo extends MapFunction[Long, Long] implements ResultTypeQueryable<Long> {
+    override getProducedType(): TypeInformation[Long] {
+	    (TypeInformation[Long]) BasicTypeInfo.INT_TYPE_INFO;
+	}
     override def map(value: Long): Long = {
         value * 2
     }
