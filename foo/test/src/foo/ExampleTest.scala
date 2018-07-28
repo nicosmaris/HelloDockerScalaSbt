@@ -6,6 +6,7 @@ import org.apache.flink.api.common.functions.MapFunction
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import scala.collection.mutable.ListBuffer
 
+import org.apache.flink.api.java.typeutils.ResultTypeQueryable
 import org.apache.flink.api.java.typeutils.TypeExtractor
 import org.apache.flink.api.common.typeinfo.TypeInformation
 //import org.apache.flink.test.util.AbstractTestBase
