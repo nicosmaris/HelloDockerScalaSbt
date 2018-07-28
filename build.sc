@@ -8,7 +8,6 @@ object foo extends ScalaModule{
     ivy"org.apache.flink::flink-streaming-scala:1.5.0",
     ivy"org.apache.flink::flink-test-utils:1.5.0"
   )
-  def mainClass = Some("foo.Example") 
   object test extends Tests { 
     def ivyDeps = Agg(ivy"com.lihaoyi::utest:0.6.0")
     def testFrameworks = Seq("utest.runner.Framework")
