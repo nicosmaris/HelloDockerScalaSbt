@@ -7,7 +7,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import scala.collection.mutable.ListBuffer
 
 import org.apache.flink.api.java.typeutils.ResultTypeQueryable
-import org.apache.flink.api.java.typeutils.TypeExtractor
+import org.apache.flink.api.common.typeinfo.BasicTypeInfo
 import org.apache.flink.api.common.typeinfo.TypeInformation
 //import org.apache.flink.test.util.AbstractTestBase
 
@@ -17,7 +17,8 @@ object Companion {
 }
 /* UUT */
 class MultiplyByTwo extends MapFunction[Long, Long] with ResultTypeQueryable[Long] {
-    override def getProducedType: TypeInformation[Long] = TypeExtractor.getForClass(classOf[Long])
+    override def getProducedType: TypeInformation[Long] =
+      BasicTypeInfo.LONG_TYPE_INFO.asInstanceOf[TypeInformation[Long]]
     override def map(value: Long): Long = {
         value * 2
     }
@@ -25,7 +26,8 @@ class MultiplyByTwo extends MapFunction[Long, Long] with ResultTypeQueryable[Lon
 
 // create a testing sink
 class CollectSink extends SinkFunction[Long] with ResultTypeQueryable[Long] {
-    override def getProducedType: TypeInformation[Long] = TypeExtractor.getForClass(classOf[Long])
+    override def getProducedType: TypeInformation[Long] =
+      BasicTypeInfo.LONG_TYPE_INFO.asInstanceOf[TypeInformation[Long]]
     override def invoke(value: Long): Unit = {
         synchronized {
             Companion.values.append(value)
