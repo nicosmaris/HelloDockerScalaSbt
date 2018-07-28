@@ -15,14 +15,6 @@ object Companion {
     // must be static
     val values: ListBuffer[Long] = new ListBuffer[Long]()
 }
-/* UUT */
-class MultiplyByTwo extends MapFunction[Long, Long] with ResultTypeQueryable[Long] {
-    override def getProducedType: TypeInformation[Long] =
-      BasicTypeInfo.LONG_TYPE_INFO.asInstanceOf[TypeInformation[Long]]
-    override def map(value: Long): Long = {
-        value * 2
-    }
-}
 
 // create a testing sink
 class CollectSink extends SinkFunction[Long] with ResultTypeQueryable[Long] {
@@ -35,7 +27,7 @@ class CollectSink extends SinkFunction[Long] with ResultTypeQueryable[Long] {
     }
 }
 
-object ExampleTests extends TestSuite {
+object MultiplyByTwoTests extends TestSuite {
   val tests = Tests{
     'test1 - {
         val env = StreamExecutionEnvironment.getExecutionEnvironment
