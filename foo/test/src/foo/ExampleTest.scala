@@ -24,7 +24,8 @@ class MultiplyByTwo extends MapFunction[Long, Long] with ResultTypeQueryable[Lon
 }
 
 // create a testing sink
-class CollectSink extends SinkFunction[Long] {
+class CollectSink extends SinkFunction[Long] with ResultTypeQueryable[Long] {
+    override def getProducedType: TypeInformation[Long] = TypeExtractor.getForClass(classOf[Long])
     override def invoke(value: Long): Unit = {
         synchronized {
             Companion.values.append(value)
