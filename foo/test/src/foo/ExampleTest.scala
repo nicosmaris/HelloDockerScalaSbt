@@ -6,7 +6,7 @@ import org.apache.flink.api.common.functions.MapFunction
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import scala.collection.mutable.ListBuffer
 
-import org.apache.flink.api.common.typeinfo.BasicTypeInfo
+import org.apache.flink.api.java.typeutils.TypeExtractor
 import org.apache.flink.api.common.typeinfo.TypeInformation
 //import org.apache.flink.test.util.AbstractTestBase
 
@@ -16,9 +16,7 @@ object Companion {
 }
 /* UUT */
 class MultiplyByTwo extends MapFunction[Long, Long] with ResultTypeQueryable[Long] {
-    override def getProducedType(): TypeInformation[Long] = {
-        (TypeInformation[Long]) BasicTypeInfo.INT_TYPE_INFO
-    }
+    override def getProducedType: TypeInformation[Long] = TypeExtractor.getForClass(classOf[Long])
     override def map(value: Long): Long = {
         value * 2
     }
