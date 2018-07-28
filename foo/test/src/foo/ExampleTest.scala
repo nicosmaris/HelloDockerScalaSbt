@@ -14,8 +14,8 @@ object Companion {
 }
 /* UUT */
 class MultiplyByTwo extends MapFunction[Long, Long] with ResultTypeQueryable[Long] {
-    override def getProducedType(): TypeInformation[Long] {
-        (TypeInformation[Long]) BasicTypeInfo.INT_TYPE_INFO;
+    override def getProducedType(): TypeInformation[Long] = {
+        (TypeInformation[Long]) BasicTypeInfo.INT_TYPE_INFO
     }
     override def map(value: Long): Long = {
         value * 2
