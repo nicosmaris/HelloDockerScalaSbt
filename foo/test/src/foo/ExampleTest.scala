@@ -5,6 +5,8 @@ import org.apache.flink.streaming.api.functions.sink.SinkFunction
 import org.apache.flink.api.common.functions.MapFunction
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import scala.collection.mutable.ListBuffer
+
+import org.apache.flink.api.common.typeinfo.BasicTypeInfo
 import org.apache.flink.api.common.typeinfo.TypeInformation
 //import org.apache.flink.test.util.AbstractTestBase
 
