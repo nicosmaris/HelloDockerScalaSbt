@@ -11,6 +11,8 @@ import org.apache.flink.api.common.typeinfo.BasicTypeInfo
 import org.apache.flink.api.common.typeinfo.TypeInformation
 //import org.apache.flink.test.util.AbstractTestBase
 
+import org.apache.flink.api.scala._
+
 object Companion {
     // must be static
     val values: ListBuffer[Long] = new ListBuffer[Long]()
